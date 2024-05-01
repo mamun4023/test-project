@@ -4,28 +4,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
-// const path = require("path");
+const body_parser_1 = __importDefault(require("body-parser"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const server = (0, express_1.default)();
+const globalErrorHandler = require('./errorHandlers/globalErrorHanlder');
 require("dotenv").config();
-// require("./config");
-// const globalErrorHandler = require("./errorHandler/globalErrorHandler");
-// const routes = require("./routes");
 const PORT = process.env.PORT;
-// const DB_STRING = process.env.DB_URL as string;
-// const Auth = require('./middlewares/auth')
-// mongoose.connect(DB_STRING).then((res) => {
-//     if (res) {
-//         console.log("DB Connected");
-//     }
-// });
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-// app.use(cors());
-// // app.get("/test", Auth, (req, res) => {
-// //     res.send(req.user)
-// // });
-// app.use("/api/v1", routes);
-// app.use(globalErrorHandler);
-app.listen(PORT, () => {
+const DB_STRING = process.env.DB_URL;
+mongoose_1.default.connect(DB_STRING).then((res) => {
+    if (res) {
+        console.log("DB Connected");
+    }
+});
+server.use(body_parser_1.default.urlencoded({ extended: true }));
+server.use(body_parser_1.default.json());
+require('./app');
+server.use(globalErrorHandler);
+server.listen(PORT, () => {
     console.log("server is running ", PORT);
 });
