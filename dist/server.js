@@ -7,7 +7,9 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const server = (0, express_1.default)();
-const globalErrorHandler = require('./errorHandlers/globalErrorHanlder');
+const morgan = require("morgan");
+const winston = require("winston");
+const globalErrorHandler = require("./errorHandlers/globalErrorHanlder");
 require("dotenv").config();
 const PORT = process.env.PORT;
 const DB_STRING = process.env.DB_URL;
@@ -18,7 +20,14 @@ mongoose_1.default.connect(DB_STRING).then((res) => {
 });
 server.use(body_parser_1.default.urlencoded({ extended: true }));
 server.use(body_parser_1.default.json());
-require('./app');
+server.use(morgan("tiny"));
+winston.createLogger({
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: "loggers.txt" }),
+    ],
+});
+require("./app");
 server.use(globalErrorHandler);
 server.listen(PORT, () => {
     console.log("server is running ", PORT);

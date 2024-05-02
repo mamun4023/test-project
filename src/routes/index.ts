@@ -1,14 +1,13 @@
 import  express  from "express";
-const router = express.Router();
+const app = express();
+const userRoutes = require('./user')
 
 
-router.get('/test', (req, res)=>{
-    res.send('working')
-})
-
-
+app.use('/user', userRoutes)
 
 
 
 
-module.exports = router;
+
+
+module.exports = app;
