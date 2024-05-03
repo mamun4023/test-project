@@ -12,7 +12,7 @@ exports.numberOfWords = async (str :  string)=> {
 exports.numberOfCharacters = async (str : string)=> { 
 
     if(str.length!==0){ 
-        return str.replace(/[^a-z]/gi, "").length
+        return str.split(" ").join("").length
     } 
     else{ 
         return 0; 
