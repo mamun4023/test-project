@@ -1,9 +1,9 @@
-import express from "express";
-const app = express();
+import { Router } from "express";
+const router = Router();
 const userRoutes = require("./user");
 const analyzerRoutes = require("./analyzer");
 
-app.use("/user", userRoutes);
-app.use("/analyzer", analyzerRoutes);
+router.use("/user", userRoutes);
+router.use("/analyzer", analyzerRoutes);
 
-module.exports = app;
+module.exports = router;

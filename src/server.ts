@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-const server = express();
+const server = express()
 const morgan = require("morgan");
 const cors = require("cors");
 const winston = require("winston");
@@ -34,3 +34,7 @@ server.use(globalErrorHandler);
 server.listen(PORT, () => {
     console.log("server is running ", PORT);
 });
+
+
+
+module.exports = server;
