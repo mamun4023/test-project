@@ -8,9 +8,9 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "test": "jest  --watchAll --detectOpenHandles",
-    "start": "tsc && node dist/server.js",
-    "dev": "tsx watch  src/server.ts",
+    "test": "NODE_ENV=test jest  --watchAll --detectOpenHandles",
+    "start": "NODE_ENV=production tsc && node dist/server.js",
+    "dev": "NODE_ENV=development tsx watch  src/server.ts",
     "build": "tsc"
   },
   "author": "",

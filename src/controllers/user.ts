@@ -10,11 +10,11 @@ exports.signUp = asyncHandler(async (req: Request, res: Response, next: NextFunc
     const isExist = await userRepository.findUser(req.body.email);
 
     if (isExist) {
-        next(new catchError("User already exist", 200));
+        next(new catchError("User already exist", 404));
         return;
     }
     const user = await userRepository.createUser(req.body);
-    successResponse({ res, message: "created", statusCode: 202, data: user });
+    successResponse({ res, message: "created", statusCode: 200, data: user });
 });
 
 exports.signIn = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -27,5 +27,5 @@ exports.signIn = asyncHandler(async (req: Request, res: Response, next: NextFunc
 
     const token = await generateToken(existUser);
 
-    successResponse({ res, message: "Signin Successfull", statusCode: 202, data: { token, data: existUser } });
+    successResponse({ res, message: "Signin Successfull", statusCode: 200, data: { token, data: existUser } });
 });

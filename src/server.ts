@@ -22,20 +22,22 @@ const stream = {
     },
 };
 
-// Used Morgan middleware with the custom Winston stream
-server.use(morgan("combined", { stream: stream }));
+if (process.env.NODE_ENV !== "test") {
+    mongoose.connect(DB_STRING).then((res) => {
+        if (res) {
+            console.log("DB Connected");
+        }
+    });
 
-mongoose.connect(DB_STRING).then((res) => {
-    if (res) {
-        console.log("DB Connected");
-    }
-});
+    // Used Morgan middleware with the custom Winston stream
+    server.use(morgan("combined", { stream: stream }));
+
+    server.listen(PORT, () => {
+        console.log("server is running ", PORT);
+    });
+}
 
 server.use(routes);
 server.use(globalErrorHandler);
-
-server.listen(PORT, () => {
-    console.log("server is running ", PORT);
-});
 
 module.exports = server;
