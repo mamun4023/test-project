@@ -14,7 +14,7 @@ exports.signUp = asyncHandler(async (req: Request, res: Response, next: NextFunc
         return;
     }
     const user = await userRepository.createUser(req.body);
-    successResponse({ res, message: "created", data: user });
+    successResponse({ res, message: "created", statusCode: 202, data: user });
 });
 
 exports.signIn = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -27,5 +27,5 @@ exports.signIn = asyncHandler(async (req: Request, res: Response, next: NextFunc
 
     const token = await generateToken(existUser);
 
-    successResponse({ res, message: "Signin Successfull", data: { token, data: existUser } });
+    successResponse({ res, message: "Signin Successfull", statusCode: 202, data: { token, data: existUser } });
 });

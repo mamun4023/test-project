@@ -8,7 +8,7 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "test": "jest  --watchAll",
+    "test": "jest  --watchAll --detectOpenHandles",
     "start": "tsc && node dist/server.js",
     "dev": "tsx watch  src/server.ts",
     "build": "tsc"
@@ -24,12 +24,14 @@
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
+    "mongodb-memory-server": "^9.2.0",
     "mongoose": "^8.3.3",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
     "supertest": "^7.0.0",
     "tsx": "^4.8.2",
-    "winston": "^3.13.0"
+    "winston": "^3.13.0",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
