@@ -4,7 +4,7 @@ import asyncHandler from "express-async-handler";
 const catchError = require("../errorHandlers/catchError");
 const successResponse = require("../responseHandlers/successResponse");
 const userRepository = require("../repository/user");
-const generateToken = require("../utils/generateToken");
+const { generateToken, passwordMatching } = require("../utils/auth");
 
 exports.signUp = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const isExist = await userRepository.findUser(req.body.email);
@@ -18,10 +18,19 @@ exports.signUp = asyncHandler(async (req: Request, res: Response, next: NextFunc
 });
 
 exports.signIn = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const existUser = await userRepository.findUser(req.body.email);
+    const { email, password } = req.body;
+
+    const existUser = await userRepository.findUser(email);
 
     if (!existUser) {
         next(new catchError("User doesn't exist!", 400));
+        return;
+    }
+
+    const isMatched = await passwordMatching(password, existUser.password);
+
+    if (!isMatched) {
+        next(new catchError("Invalid Password", 404));
         return;
     }
 
