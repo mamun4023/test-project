@@ -1,10 +1,12 @@
 import { Router } from "express";
 const router = Router();
+const isAuthencated = require('../middlewares/isAuthencated')
 const userRoutes = require("./user");
 const analyzerRoutes = require("./analyzer");
 
+
 router.use("/user", userRoutes);
-router.use("/analyzer", analyzerRoutes);
+router.use("/analyzer", isAuthencated, analyzerRoutes);
 
 
 

@@ -27,5 +27,5 @@ exports.signIn = asyncHandler(async (req: Request, res: Response, next: NextFunc
 
     const token = await generateToken(existUser);
 
-    successResponse({ res, message: "Signin Successfull", statusCode: 200, data: { token, data: existUser } });
+    successResponse({ res, message: "Signin Successfull", statusCode: 200, data: { token } });
 });
